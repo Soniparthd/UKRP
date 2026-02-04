@@ -1,36 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UKRP | Official Staff Portal</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UKRP | Staff Portal</title>
 
-  <!-- SEO -->
-  <meta name="description" content="UKRP Official Staff Moderation Portal">
-  <meta name="robots" content="noindex,nofollow">
-  <meta name="theme-color" content="#ff0000">
+<style>
+/* ================= CSS ================= */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0a0a0a;
+  color: white;
+}
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
+button {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.hidden { display: none; }
+
+#setup-stage,
+#denied-stage {
+  position: fixed;
+  inset: 0;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  background: #111;
+  padding: 30px;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 420px;
+  border-top: 5px solid red;
+}
+
+h1 {
+  text-align: center;
+  font-size: 42px;
+  margin: 0;
+}
+
+p.subtitle {
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 20px;
+  letter-spacing: 0.2em;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  background: #000;
+  color: white;
+  border: 1px solid #333;
+  border-radius: 8px;
+}
+
+button.primary {
+  width: 100%;
+  padding: 14px;
+  background: red;
+  color: white;
+  border-radius: 12px;
+  border: none;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid #333;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+@media (max-width: 800px) {
+  main { grid-template-columns: 1fr; }
+}
+
+.card {
+  background: #111;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.punish-btn {
+  padding: 12px;
+  background: #000;
+  border: 1px solid #444;
+  color: #aaa;
+  border-radius: 10px;
+}
+
+.punish-btn.active {
+  background: red;
+  color: white;
+}
+
+.levels {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.output {
+  background: #000;
+  padding: 20px;
+  border-radius: 16px;
+  margin-top: 15px;
+}
+</style>
 </head>
+
 <body>
 
-<!-- ================= LOGIN ================= -->
+<!-- LOGIN -->
 <section id="setup-stage">
-  <div class="login-container">
-    <header>
-      <h1>UKRP</h1>
-      <p>Personnel Authentication</p>
-    </header>
+  <div class="box">
+    <h1>UKRP</h1>
+    <p class="subtitle">PERSONNEL AUTHENTICATION</p>
 
     <div class="field">
-      <label>Personnel Name</label>
-      <input id="input-name" type="text" placeholder="Roblox Username">
+      <input id="name" placeholder="Roblox Username">
     </div>
 
     <div class="field">
-      <label>Authority Rank</label>
-      <select id="input-rank">
+      <select id="rank">
         <option value="">-- Select Authority --</option>
         <option value="Trainee">Trainee</option>
         <option value="Moderator">Moderator</option>
@@ -40,79 +151,138 @@
       </select>
     </div>
 
-    <button id="login-btn">Establish Connection</button>
+    <button class="primary" onclick="login()">Establish Connection</button>
   </div>
 </section>
 
-<!-- ================= DENIED ================= -->
-<section id="denied-stage" hidden>
-  <div class="denied-box">
+<!-- DENIED -->
+<section id="denied-stage" class="hidden">
+  <div class="box">
     <h2>Access Denied</h2>
     <p>Trainee accounts are restricted.</p>
-    <button onclick="location.reload()">Return</button>
+    <button class="primary" onclick="resetAll()">Return</button>
   </div>
 </section>
 
-<!-- ================= DASHBOARD ================= -->
-<section id="main-dashboard" hidden>
-
+<!-- DASHBOARD -->
+<section id="dashboard" class="hidden">
   <nav>
-    <div class="brand">UKRP</div>
-    <div class="staff-info">
-      <div>
-        <div id="display-name"></div>
-        <div id="display-rank"></div>
-      </div>
-      <button id="logout-btn">Logout</button>
+    <div>UKRP</div>
+    <div>
+      <span id="d-name"></span> |
+      <span id="d-rank"></span>
+      <button onclick="resetAll()">Logout</button>
     </div>
   </nav>
 
   <main>
-    <aside>
-      <section>
-        <h3>Staff Greeting</h3>
-        <p id="greet-preview"></p>
-        <button id="copy-greeting">Copy Greeting</button>
-      </section>
-    </aside>
+    <div class="card">
+      <p id="greet"></p>
+      <button onclick="copyText(greet.innerText)">Copy Greeting</button>
+    </div>
 
-    <section>
-      <h2>Punishment Processor</h2>
+    <div class="card">
+      <select id="offense">
+        <option value="">-- Select Offense --</option>
+        <option>FRP</option>
+        <option>RDM</option>
+        <option>VDM</option>
+        <option>GTA Driving</option>
+        <option>NLR</option>
+        <option>LTAP</option>
+      </select>
 
-      <div class="field">
-        <label>Offense</label>
-        <select id="offense-picker">
-          <option value="">-- Select Offense --</option>
-        </select>
+      <input id="target" placeholder="Offender name">
+
+      <div class="levels">
+        <button class="punish-btn" onclick="setLevel(this,'Warning')">Warning</button>
+        <button class="punish-btn" onclick="setLevel(this,'Kick')">Kick</button>
+        <button class="punish-btn" onclick="setLevel(this,'Ban')">Ban</button>
       </div>
 
-      <div class="field">
-        <label>
-          <input type="checkbox" id="toggle-name" checked>
-          Include Offender Name
-        </label>
-        <input id="offender-name" placeholder="Username">
+      <div class="output">
+        <p id="log">Select details to generate log.</p>
       </div>
 
-      <div class="punishment-levels">
-        <button class="punish-btn" data-level="Warning">Warning</button>
-        <button class="punish-btn" data-level="Kick">Kick</button>
-        <button class="punish-btn" data-level="Ban">Ban</button>
-      </div>
-
-      <div class="output-box">
-        <p id="final-log">Select details to generate log.</p>
-        <div id="log-footer" hidden>
-          <p id="log-sig"></p>
-        </div>
-      </div>
-
-      <button id="copy-log">Copy Official Log</button>
-    </section>
+      <button class="primary" onclick="copyText(log.innerText)">Copy Log</button>
+    </div>
   </main>
 </section>
 
-<!-- JS -->
-<script src="script.js"></script>
+<script>
+/* ================= JS ================= */
+let level = "";
+
+function login() {
+  const name = document.getElementById("name").value.trim();
+  const rank = document.getElementById("rank").value;
+
+  if (!name || !rank) {
+    alert("Fill all fields");
+    return;
+  }
+
+  if (rank === "Trainee") {
+    showDenied();
+    return;
+  }
+
+  localStorage.setItem("ukrp", JSON.stringify({ name, rank }));
+  openDashboard(name, rank);
+}
+
+function openDashboard(name, rank) {
+  hideAll();
+  dashboard.classList.remove("hidden");
+  d-name.innerText = name;
+  d-rank.innerText = rank;
+  greet.innerText = `Hello, I'm ${rank} at UKRP. How may I assist you?`;
+}
+
+function showDenied() {
+  hideAll();
+  denied-stage.classList.remove("hidden");
+}
+
+function hideAll() {
+  setup-stage.classList.add("hidden");
+  denied-stage.classList.add("hidden");
+  dashboard.classList.add("hidden");
+}
+
+function resetAll() {
+  localStorage.removeItem("ukrp");
+  location.reload();
+}
+
+function setLevel(btn, lvl) {
+  level = lvl;
+  document.querySelectorAll(".punish-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  updateLog();
+}
+
+function updateLog() {
+  const off = offense.value;
+  const targetName = target.value || "User";
+  if (!off || !level) return;
+  log.innerText = `OFFICIAL NOTICE: ${targetName}, you are issued a ${level} for ${off}.`;
+}
+
+offense.onchange = updateLog;
+target.oninput = updateLog;
+
+function copyText(t) {
+  navigator.clipboard.writeText(t);
+}
+
+/* Auto session restore */
+const saved = localStorage.getItem("ukrp");
+if (saved) {
+  const s = JSON.parse(saved);
+  openDashboard(s.name, s.rank);
+}
+</script>
+
 </body>
 </html>
