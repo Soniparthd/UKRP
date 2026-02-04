@@ -4,341 +4,189 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UKRP | Official Staff Portal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Inter:wght@400;700;900&display=swap');
-        
-        :root {
-            --uk-red: #ff0000;
-            --uk-black: #0a0a0a;
-        }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--uk-black);
-            color: #ffffff;
-            overflow-x: hidden;
-        }
-
-        .uk-logo-font { font-family: 'Syncopate', sans-serif; }
-
-        .red-gradient {
-            background: linear-gradient(135deg, #ff0000 0%, #7a0000 100%);
-        }
-
-        .glass-dark {
-            background: rgba(15, 15, 15, 0.9);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .punish-btn {
-            background: #111;
-            border: 2px solid #222;
-            transition: all 0.2s;
-            text-transform: uppercase;
-            font-size: 10px;
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            color: #666;
-        }
-
-        .punish-btn.active {
-            border-color: var(--uk-red);
-            background: var(--uk-red);
-            color: white;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
-        }
-
-        .dropdown-custom {
-            background-color: #000;
-            border: 1px solid #333;
-            color: white;
-            appearance: none;
-            cursor: pointer;
-        }
-
-        .dropdown-custom:focus {
-            border-color: #ff0000;
-            outline: none;
-        }
-
-        .section-tag {
-            font-size: 10px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.3em;
-            color: #ff0000;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .fade-in { animation: fadeIn 0.5s ease-in forwards; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    </style>
+    <!-- SEO / Deployment -->
+    <meta name="description" content="UKRP Official Staff Moderation & Punishment Portal">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="theme-color" content="#ff0000">
+    <link rel="icon" href="/favicon.ico">
 </head>
-<body class="min-h-screen">
 
-    <!-- LOGIN STAGE -->
-    <div id="setup-stage" class="fixed inset-0 z-50 flex items-center justify-center bg-black p-4">
-        <div class="w-full max-w-md">
-            <div class="text-center mb-10">
-                <h1 class="uk-logo-font text-5xl italic tracking-tighter text-white">UK<span class="text-red-600">RP</span></h1>
-                <p class="text-[10px] font-black uppercase tracking-[0.5em] text-gray-500 mt-2">Personnel Authentication</p>
+<body>
+
+<!-- ================= LOGIN / SETUP ================= -->
+<section id="setup-stage">
+    <div class="login-container">
+        <header>
+            <h1>UKRP</h1>
+            <p>Personnel Authentication</p>
+        </header>
+
+        <form id="login-form" autocomplete="off">
+            <div class="field">
+                <label for="input-name">Personnel Name</label>
+                <input
+                    type="text"
+                    id="input-name"
+                    placeholder="Roblox Username"
+                    required
+                >
             </div>
 
-            <div class="glass-dark p-10 rounded-[2.5rem] border-t-4 border-red-600 shadow-2xl">
-                <div class="space-y-6">
-                    <div>
-                        <label class="text-[9px] font-black uppercase tracking-widest text-gray-500 mb-2 block">Personnel Name</label>
-                        <input type="text" id="input-name" placeholder="Roblox Username" class="w-full p-4 bg-black border border-white/10 rounded-2xl outline-none focus:border-red-600 font-bold">
-                    </div>
-                    <div>
-                        <label class="text-[9px] font-black uppercase tracking-widest text-gray-500 mb-2 block">Authority Rank</label>
-                        <select id="input-rank" class="w-full p-4 dropdown-custom rounded-2xl font-bold">
-                            <option value="">-- Select Authority --</option>
-                            <option value="Trainee">1. Trainee</option>
-                            <option value="Supervised Moderator">2. Supervised Moderator</option>
-                            <option value="Moderator">3. Moderator</option>
-                            <option value="Junior Moderator">4. Junior Moderator</option>
-                            <option value="Senior Moderator">5. Senior Moderator</option>
-                            <option value="Head Moderator">6. Head Moderator</option>
-                            <option value="Junior Administration">7. Junior Administration</option>
-                            <option value="Senior Administration">8. Senior Administration</option>
-                            <option value="Head Administration">9. Head Administration</option>
-                            <option value="Junior Internal Affair">10. Junior Internal Affair</option>
-                            <option value="Internal Affair">11. Internal Affair</option>
-                            <option value="Foundership">12. Foundership</option>
-                            <option value="Assistance Co-Founder">13. Assistance Co-Founder</option>
-                            <option value="Co-Founder">14. Co-Founder</option>
-                            <option value="Founder">15. Founder</option>
-                        </select>
-                    </div>
-                    <button onclick="handleLogin()" class="w-full py-5 red-gradient text-white font-black rounded-2xl uppercase tracking-widest hover:brightness-125 transition-all">Establish Connection</button>
-                </div>
+            <div class="field">
+                <label for="input-rank">Authority Rank</label>
+                <select id="input-rank" required>
+                    <option value="">-- Select Authority --</option>
+                    <option value="Trainee">Trainee</option>
+                    <option value="Supervised Moderator">Supervised Moderator</option>
+                    <option value="Moderator">Moderator</option>
+                    <option value="Junior Moderator">Junior Moderator</option>
+                    <option value="Senior Moderator">Senior Moderator</option>
+                    <option value="Head Moderator">Head Moderator</option>
+                    <option value="Junior Administration">Junior Administration</option>
+                    <option value="Senior Administration">Senior Administration</option>
+                    <option value="Head Administration">Head Administration</option>
+                    <option value="Internal Affair">Internal Affair</option>
+                    <option value="Foundership">Foundership</option>
+                    <option value="Assistance Co-Founder">Assistance Co-Founder</option>
+                    <option value="Co-Founder">Co-Founder</option>
+                    <option value="Founder">Founder</option>
+                </select>
             </div>
-        </div>
+
+            <button type="button" id="login-btn">
+                Establish Connection
+            </button>
+        </form>
     </div>
+</section>
 
-    <!-- ACCESS DENIED STAGE (For Trainees) -->
-    <div id="denied-stage" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black p-4">
-        <div class="text-center max-w-sm">
-            <div class="w-20 h-20 bg-red-600/20 border border-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ff0000" stroke-width="3"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            </div>
-            <h2 class="uk-logo-font text-2xl text-white mb-2 uppercase">Access Denied</h2>
-            <p class="text-gray-500 text-sm font-bold mb-8 italic">Trainee accounts are restricted from using the Official Punishment Generator. Please contact your Supervisor.</p>
-            <button onclick="location.reload()" class="px-8 py-3 bg-white text-black font-black rounded-xl uppercase text-[10px] tracking-widest">Return to Login</button>
-        </div>
+<!-- ================= ACCESS DENIED ================= -->
+<section id="denied-stage" hidden>
+    <div class="denied-box">
+        <h2>Access Denied</h2>
+        <p>
+            Trainee accounts are restricted from accessing the
+            official moderation system.
+        </p>
+        <button id="return-login">
+            Return to Login
+        </button>
     </div>
+</section>
 
-    <!-- MAIN DASHBOARD -->
-    <div id="main-dashboard" class="hidden transition-opacity duration-700">
-        <!-- NAV -->
-        <nav class="bg-black/80 border-b border-white/5 py-5 px-6 md:px-12 flex justify-between items-center sticky top-0 z-40 backdrop-blur-xl">
-            <div class="uk-logo-font text-xl">UK<span class="text-red-600">RP</span></div>
-            <div class="flex items-center gap-5">
-                <div class="text-right">
-                    <p id="display-name" class="text-sm font-black uppercase tracking-tighter">User</p>
-                    <p id="display-rank" class="text-[9px] font-bold text-red-600 uppercase tracking-widest">Rank</p>
-                </div>
-                <button onclick="location.reload()" class="p-2 bg-red-600/10 hover:bg-red-600 rounded-lg text-red-600 hover:text-white transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+<!-- ================= MAIN DASHBOARD ================= -->
+<section id="main-dashboard" hidden>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav>
+        <div class="brand">UKRP</div>
+
+        <div class="staff-info">
+            <span id="display-name">Name</span>
+            <span id="display-rank">Rank</span>
+            <button id="logout-btn">Logout</button>
+        </div>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main>
+
+        <!-- ===== LEFT COLUMN ===== -->
+        <aside>
+
+            <!-- Staff Greeting -->
+            <section>
+                <h3>Staff Introduction</h3>
+                <p id="greet-preview">
+                    Hello, I'm [Rank] at UKRP. How may I assist you today?
+                </p>
+                <button id="copy-greeting">
+                    Copy Greeting Message
+                </button>
+            </section>
+
+            <!-- Comms Verification -->
+            <section>
+                <h3>Comms Verification</h3>
+
+                <button class="preset-msg">
+                    Before we begin, are you in our comms?
+                </button>
+
+                <button class="preset-msg">
+                    Comms is required to proceed. Code: ukerlc.
+                </button>
+            </section>
+
+        </aside>
+
+        <!-- ===== RIGHT COLUMN ===== -->
+        <section>
+
+            <h2>Punishment Processor</h2>
+
+            <!-- Offense Selection -->
+            <div class="field">
+                <label for="offense-picker">Select Offense</label>
+                <select id="offense-picker">
+                    <option value="">-- Choose Violation --</option>
+                </select>
+            </div>
+
+            <!-- Offender -->
+            <div class="field">
+                <label>
+                    <input type="checkbox" id="toggle-name" checked>
+                    Include Offender Name
+                </label>
+                <input
+                    type="text"
+                    id="offender-name"
+                    placeholder="Offender Username"
+                >
+            </div>
+
+            <!-- Punishment Level -->
+            <div class="punishment-levels">
+                <button class="punish-btn" data-level="Verbal Warning">
+                    Verbal Warning
+                </button>
+                <button class="punish-btn" data-level="Warning">
+                    Warning
+                </button>
+                <button class="punish-btn" data-level="Kick">
+                    Kick
+                </button>
+                <button class="punish-btn" data-level="Ban">
+                    Ban
                 </button>
             </div>
-        </nav>
 
-        <main class="max-w-7xl mx-auto p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-10">
-            <!-- LEFT COLUMN -->
-            <div class="lg:col-span-5 space-y-8">
-                <!-- GREETING SECTION -->
-                <section class="glass-dark rounded-[2.5rem] p-8 border-l-4 border-red-600">
-                    <span class="section-tag">I. Staff Introduction</span>
-                    <div class="bg-black p-6 rounded-2xl border border-white/5 mb-5 shadow-inner">
-                        <p id="greet-preview" class="text-lg font-bold italic leading-relaxed text-gray-300">
-                            Hello, I'm [Rank] at UKRP, how can I assist you?
-                        </p>
-                    </div>
-                    <button onclick="copyMsg(document.getElementById('greet-preview').innerText)" class="w-full py-4 bg-white text-black font-black rounded-xl uppercase text-[10px] tracking-widest hover:bg-red-600 hover:text-white transition-all shadow-xl">Copy Greeting Message</button>
-                </section>
-
-                <!-- COMMS SECTION -->
-                <section class="glass-dark rounded-[2.5rem] p-8 border-l-4 border-white">
-                    <span class="section-tag" style="color:white">II. Comms Verification</span>
-                    <div class="space-y-3">
-                        <button onclick="copyMsg('Before we begin, are you in our comms?')" class="w-full p-5 bg-black rounded-2xl border border-white/5 text-left group hover:border-red-600 transition-all">
-                            <p class="text-[10px] font-black text-gray-500 uppercase mb-1">Status Verification</p>
-                            <p class="text-sm font-medium italic">"Before we begin, are you in our comms?"</p>
-                        </button>
-                        <button onclick="copyMsg('Comms is required for me to help you. Code is ukerlc, ping me once you joined.')" class="w-full p-5 bg-black rounded-2xl border border-white/5 text-left group hover:border-red-600 transition-all">
-                            <p class="text-[10px] font-black text-gray-500 uppercase mb-1">Requirement & Code</p>
-                            <p class="text-sm font-medium italic">"Comms is required for me to help you. Code is ukerlc..."</p>
-                        </button>
-                    </div>
-                </section>
+            <!-- Guideline -->
+            <div id="guide-box" hidden>
+                <p id="guide-text"></p>
             </div>
 
-            <!-- RIGHT COLUMN -->
-            <div class="lg:col-span-7">
-                <section class="glass-dark rounded-[3rem] p-10 border-t-8 border-red-600 shadow-2xl h-full">
-                    <span class="section-tag">III. Punishment Processor</span>
-                    
-                    <div class="space-y-8 mt-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-black uppercase text-gray-500 ml-1">Select Offence</label>
-                                <select id="offense-picker" class="w-full p-4 dropdown-custom rounded-2xl font-bold">
-                                    <option value="">-- Choose Violation --</option>
-                                </select>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex justify-between ml-1">
-                                    <label class="text-[10px] font-black uppercase text-gray-500">Offender</label>
-                                    <label class="flex items-center gap-2 cursor-pointer">
-                                        <input type="checkbox" id="toggle-name" checked class="accent-red-600">
-                                        <span class="text-[8px] font-black text-gray-400 uppercase">Include Name</span>
-                                    </label>
-                                </div>
-                                <input type="text" id="offender-name" placeholder="Username" class="w-full p-4 bg-black border border-white/10 rounded-2xl font-bold outline-none focus:border-red-600">
-                            </div>
-                        </div>
+            <!-- Final Output -->
+            <div class="output-box">
+                <p id="final-log">
+                    Select details to generate official log.
+                </p>
 
-                        <div class="space-y-3">
-                            <label class="text-[10px] font-black uppercase text-gray-500 ml-1">Selection Level</label>
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                                <button onclick="setLevel('Verbal Warning', this)" class="punish-btn p-4 rounded-2xl">1. Verbal</button>
-                                <button onclick="setLevel('Warning', this)" class="punish-btn p-4 rounded-2xl">2. Warning</button>
-                                <button onclick="setLevel('Kick', this)" class="punish-btn p-4 rounded-2xl">3. Kick</button>
-                                <button onclick="setLevel('Ban', this)" class="punish-btn p-4 rounded-2xl">4. Ban</button>
-                            </div>
-                        </div>
-
-                        <div id="guide-box" class="hidden p-6 bg-red-600/5 border border-red-600/20 rounded-3xl">
-                            <p class="text-[8px] font-black text-red-600 uppercase mb-1 tracking-widest">Official Guideline</p>
-                            <p id="guide-text" class="text-sm font-bold text-gray-300 italic"></p>
-                        </div>
-
-                        <div class="bg-zinc-950 rounded-[2.5rem] p-10 border border-white/5 relative overflow-hidden">
-                            <label class="text-[10px] font-black uppercase text-red-600 tracking-[0.3em] mb-4 block">Official Output Message</label>
-                            <p id="final-log" class="text-xl font-bold italic text-gray-500 leading-relaxed">Select details to generate official log...</p>
-                            <div id="log-footer" class="hidden mt-8 pt-6 border-t border-white/5 flex flex-col gap-3">
-                                <p id="log-sig" class="text-[9px] font-black uppercase tracking-widest text-gray-600"></p>
-                                <div id="kick-warning" class="hidden flex items-center gap-2 p-3 bg-red-600/10 border border-red-600/20 rounded-xl">
-                                    <span class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
-                                    <p class="text-[9px] font-black text-red-600 uppercase">Warning: Re-joining within 30m results in harsher penalty.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button onclick="copyLog()" class="w-full py-6 red-gradient text-white font-black rounded-3xl uppercase tracking-widest text-lg shadow-2xl hover:scale-[1.01] active:scale-95 transition-all">Copy Official Log</button>
-                    </div>
-                </section>
+                <div id="log-footer" hidden>
+                    <p id="log-sig"></p>
+                </div>
             </div>
-        </main>
-    </div>
 
-    <script>
-        const offenses = [
-            { n: "FRP - Fail Roleplay", d: "Someone is roleplaying in a completely unrealistic way.", r: "Warning/Verbal Warning" },
-            { n: "RDM - Random Death Match", d: "Going around and shooting people for no reason.", r: "Warning/Kick" },
-            { n: "MRDM - Mass RDM", d: "Going around and shooting 3+ people for no reason.", r: "Ban" },
-            { n: "VDM - Vehicle Death Match", d: "Using vehicle to hit people or shooting vehicles.", r: "Warning/Verbal Warning" },
-            { n: "GTA Driving", d: "Driving around with no regard to roleplay.", r: "Warning/Verbal Warning" },
-            { n: "Cop Baiting", d: "Intentionally grabbing a cop's attention.", r: "Warning" },
-            { n: "NTRP - No Intent to RP", d: "Has zero intent to roleplay in the server.", r: "Kick/Ban" },
-            { n: "Member Disrespect", d: "Disrespecting a player.", r: "Warning/Kick/Ban" },
-            { n: "NLR - New Life Rule", d: "Returned to a scene after death knowing everything.", r: "Warning" },
-            { n: "Trolling", d: "Disrupting another's roleplay by trolling.", r: "Kick/Ban" },
-            { n: "Lying To Staff", d: "Clear lie to avoid punishment or manipulate scenes.", r: "Kick/Ban" },
-            { n: "LTAP", d: "Leaving the server to avoid receiving punishment.", r: "Ban" },
-            { n: "Exploiting", d: "Using software to fly or bypass game filters.", r: "Ban" }
-        ];
+            <button id="copy-log">
+                Copy Official Log
+            </button>
 
-        let userName = "", userRank = "", activeLevel = "";
+        </section>
 
-        // Initial Populating
-        const picker = document.getElementById('offense-picker');
-        offenses.forEach(o => {
-            const opt = document.createElement('option');
-            opt.value = o.n;
-            opt.textContent = o.n;
-            picker.appendChild(opt);
-        });
+    </main>
+</section>
 
-        function handleLogin() {
-            userName = document.getElementById('input-name').value.trim();
-            userRank = document.getElementById('input-rank').value;
-            
-            if (!userName || !userRank) return alert("All credentials required.");
-
-            // Trainee Restriction
-            if (userRank === "Trainee") {
-                document.getElementById('setup-stage').classList.add('hidden');
-                document.getElementById('denied-stage').classList.remove('hidden');
-                return;
-            }
-
-            document.getElementById('setup-stage').classList.add('hidden');
-            const dash = document.getElementById('main-dashboard');
-            dash.classList.remove('hidden');
-            dash.classList.add('fade-in');
-
-            document.getElementById('display-name').innerText = userName;
-            document.getElementById('display-rank').innerText = userRank;
-            document.getElementById('greet-preview').innerText = `Hello, I'm ${userRank} at UKRP, how can I assist you?`;
-        }
-
-        function setLevel(level, btn) {
-            activeLevel = level;
-            document.querySelectorAll('.punish-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            updateLog();
-        }
-
-        function updateLog() {
-            const off = picker.value;
-            const item = offenses.find(i => i.n === off);
-            const useName = document.getElementById('toggle-name').checked;
-            const target = document.getElementById('offender-name').value.trim() || "User";
-            
-            if (item && activeLevel) {
-                let msg = `You ${useName ? target : ''} are being issued a ${activeLevel} for ${item.n} based on UKRP guidelines. Violation: ${item.d}`;
-                
-                if (activeLevel === 'Kick') {
-                    msg += " | Notice: You cannot join for 30 minutes. If you join, you will receive a harsher punishment.";
-                    document.getElementById('kick-warning').classList.remove('hidden');
-                } else {
-                    document.getElementById('kick-warning').classList.add('hidden');
-                }
-
-                document.getElementById('final-log').innerText = msg;
-                document.getElementById('log-sig').innerText = `AUTHORITY: ${userName} | RANK: ${userRank}`;
-                document.getElementById('log-footer').classList.remove('hidden');
-                document.getElementById('guide-text').innerText = `Handbook Recommendation: ${item.r}`;
-                document.getElementById('guide-box').classList.remove('hidden');
-                document.getElementById('final-log').classList.replace('text-gray-500', 'text-white');
-            }
-        }
-
-        picker.onchange = updateLog;
-        document.getElementById('offender-name').oninput = updateLog;
-        document.getElementById('toggle-name').onchange = updateLog;
-
-        function copyMsg(text) {
-            const el = document.createElement('textarea');
-            el.value = text;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-        }
-
-        function copyLog() {
-            if (!picker.value || !activeLevel) return alert("Configuration required.");
-            const full = `${document.getElementById('final-log').innerText} | ${document.getElementById('log-sig').innerText}`;
-            copyMsg(full);
-        }
-    </script>
 </body>
 </html>
-
