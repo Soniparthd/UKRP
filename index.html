@@ -1,192 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UKRP | Official Staff Portal</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UKRP | Official Staff Portal</title>
 
-    <!-- SEO / Deployment -->
-    <meta name="description" content="UKRP Official Staff Moderation & Punishment Portal">
-    <meta name="robots" content="noindex,nofollow">
-    <meta name="theme-color" content="#ff0000">
-    <link rel="icon" href="/favicon.ico">
+  <!-- SEO -->
+  <meta name="description" content="UKRP Official Staff Moderation Portal">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#ff0000">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- ================= LOGIN / SETUP ================= -->
+<!-- ================= LOGIN ================= -->
 <section id="setup-stage">
-    <div class="login-container">
-        <header>
-            <h1>UKRP</h1>
-            <p>Personnel Authentication</p>
-        </header>
+  <div class="login-container">
+    <header>
+      <h1>UKRP</h1>
+      <p>Personnel Authentication</p>
+    </header>
 
-        <form id="login-form" autocomplete="off">
-            <div class="field">
-                <label for="input-name">Personnel Name</label>
-                <input
-                    type="text"
-                    id="input-name"
-                    placeholder="Roblox Username"
-                    required
-                >
-            </div>
-
-            <div class="field">
-                <label for="input-rank">Authority Rank</label>
-                <select id="input-rank" required>
-                    <option value="">-- Select Authority --</option>
-                    <option value="Trainee">Trainee</option>
-                    <option value="Supervised Moderator">Supervised Moderator</option>
-                    <option value="Moderator">Moderator</option>
-                    <option value="Junior Moderator">Junior Moderator</option>
-                    <option value="Senior Moderator">Senior Moderator</option>
-                    <option value="Head Moderator">Head Moderator</option>
-                    <option value="Junior Administration">Junior Administration</option>
-                    <option value="Senior Administration">Senior Administration</option>
-                    <option value="Head Administration">Head Administration</option>
-                    <option value="Internal Affair">Internal Affair</option>
-                    <option value="Foundership">Foundership</option>
-                    <option value="Assistance Co-Founder">Assistance Co-Founder</option>
-                    <option value="Co-Founder">Co-Founder</option>
-                    <option value="Founder">Founder</option>
-                </select>
-            </div>
-
-            <button type="button" id="login-btn">
-                Establish Connection
-            </button>
-        </form>
+    <div class="field">
+      <label>Personnel Name</label>
+      <input id="input-name" type="text" placeholder="Roblox Username">
     </div>
+
+    <div class="field">
+      <label>Authority Rank</label>
+      <select id="input-rank">
+        <option value="">-- Select Authority --</option>
+        <option value="Trainee">Trainee</option>
+        <option value="Moderator">Moderator</option>
+        <option value="Senior Moderator">Senior Moderator</option>
+        <option value="Admin">Admin</option>
+        <option value="Founder">Founder</option>
+      </select>
+    </div>
+
+    <button id="login-btn">Establish Connection</button>
+  </div>
 </section>
 
-<!-- ================= ACCESS DENIED ================= -->
+<!-- ================= DENIED ================= -->
 <section id="denied-stage" hidden>
-    <div class="denied-box">
-        <h2>Access Denied</h2>
-        <p>
-            Trainee accounts are restricted from accessing the
-            official moderation system.
-        </p>
-        <button id="return-login">
-            Return to Login
-        </button>
-    </div>
+  <div class="denied-box">
+    <h2>Access Denied</h2>
+    <p>Trainee accounts are restricted.</p>
+    <button onclick="location.reload()">Return</button>
+  </div>
 </section>
 
-<!-- ================= MAIN DASHBOARD ================= -->
+<!-- ================= DASHBOARD ================= -->
 <section id="main-dashboard" hidden>
 
-    <!-- ===== NAVBAR ===== -->
-    <nav>
-        <div class="brand">UKRP</div>
+  <nav>
+    <div class="brand">UKRP</div>
+    <div class="staff-info">
+      <div>
+        <div id="display-name"></div>
+        <div id="display-rank"></div>
+      </div>
+      <button id="logout-btn">Logout</button>
+    </div>
+  </nav>
 
-        <div class="staff-info">
-            <span id="display-name">Name</span>
-            <span id="display-rank">Rank</span>
-            <button id="logout-btn">Logout</button>
+  <main>
+    <aside>
+      <section>
+        <h3>Staff Greeting</h3>
+        <p id="greet-preview"></p>
+        <button id="copy-greeting">Copy Greeting</button>
+      </section>
+    </aside>
+
+    <section>
+      <h2>Punishment Processor</h2>
+
+      <div class="field">
+        <label>Offense</label>
+        <select id="offense-picker">
+          <option value="">-- Select Offense --</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>
+          <input type="checkbox" id="toggle-name" checked>
+          Include Offender Name
+        </label>
+        <input id="offender-name" placeholder="Username">
+      </div>
+
+      <div class="punishment-levels">
+        <button class="punish-btn" data-level="Warning">Warning</button>
+        <button class="punish-btn" data-level="Kick">Kick</button>
+        <button class="punish-btn" data-level="Ban">Ban</button>
+      </div>
+
+      <div class="output-box">
+        <p id="final-log">Select details to generate log.</p>
+        <div id="log-footer" hidden>
+          <p id="log-sig"></p>
         </div>
-    </nav>
+      </div>
 
-    <!-- ===== MAIN CONTENT ===== -->
-    <main>
-
-        <!-- ===== LEFT COLUMN ===== -->
-        <aside>
-
-            <!-- Staff Greeting -->
-            <section>
-                <h3>Staff Introduction</h3>
-                <p id="greet-preview">
-                    Hello, I'm [Rank] at UKRP. How may I assist you today?
-                </p>
-                <button id="copy-greeting">
-                    Copy Greeting Message
-                </button>
-            </section>
-
-            <!-- Comms Verification -->
-            <section>
-                <h3>Comms Verification</h3>
-
-                <button class="preset-msg">
-                    Before we begin, are you in our comms?
-                </button>
-
-                <button class="preset-msg">
-                    Comms is required to proceed. Code: ukerlc.
-                </button>
-            </section>
-
-        </aside>
-
-        <!-- ===== RIGHT COLUMN ===== -->
-        <section>
-
-            <h2>Punishment Processor</h2>
-
-            <!-- Offense Selection -->
-            <div class="field">
-                <label for="offense-picker">Select Offense</label>
-                <select id="offense-picker">
-                    <option value="">-- Choose Violation --</option>
-                </select>
-            </div>
-
-            <!-- Offender -->
-            <div class="field">
-                <label>
-                    <input type="checkbox" id="toggle-name" checked>
-                    Include Offender Name
-                </label>
-                <input
-                    type="text"
-                    id="offender-name"
-                    placeholder="Offender Username"
-                >
-            </div>
-
-            <!-- Punishment Level -->
-            <div class="punishment-levels">
-                <button class="punish-btn" data-level="Verbal Warning">
-                    Verbal Warning
-                </button>
-                <button class="punish-btn" data-level="Warning">
-                    Warning
-                </button>
-                <button class="punish-btn" data-level="Kick">
-                    Kick
-                </button>
-                <button class="punish-btn" data-level="Ban">
-                    Ban
-                </button>
-            </div>
-
-            <!-- Guideline -->
-            <div id="guide-box" hidden>
-                <p id="guide-text"></p>
-            </div>
-
-            <!-- Final Output -->
-            <div class="output-box">
-                <p id="final-log">
-                    Select details to generate official log.
-                </p>
-
-                <div id="log-footer" hidden>
-                    <p id="log-sig"></p>
-                </div>
-            </div>
-
-            <button id="copy-log">
-                Copy Official Log
-            </button>
-
-        </section>
-
-    </main>
+      <button id="copy-log">Copy Official Log</button>
+    </section>
+  </main>
 </section>
 
+<!-- JS -->
+<script src="script.js"></script>
 </body>
 </html>
